@@ -27,13 +27,14 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
               Tab(text: 'Integer'),
               Tab(text: 'Decimal'),
+              Tab(text: 'ITEMS'),
             ],
           ),
           title: Text('Numberpicker example'),
@@ -42,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             _IntegerExample(),
             _DecimalExample(),
+            _ItemsExample(),
           ],
         ),
       ),
@@ -63,7 +65,7 @@ class __IntegerExampleState extends State<_IntegerExample> {
     return Column(
       children: <Widget>[
         SizedBox(height: 16),
-        Text('Default', style: Theme.of(context).textTheme.headline6),
+        Text('Default', style: Theme.of(context).textTheme.titleLarge),
         NumberPicker(
           value: _currentIntValue,
           minValue: 0,
@@ -95,7 +97,7 @@ class __IntegerExampleState extends State<_IntegerExample> {
         ),
         Divider(color: Colors.grey, height: 32),
         SizedBox(height: 16),
-        Text('Horizontal', style: Theme.of(context).textTheme.headline6),
+        Text('Horizontal', style: Theme.of(context).textTheme.titleLarge),
         NumberPicker(
           value: _currentHorizontalIntValue,
           minValue: 0,
@@ -148,7 +150,7 @@ class __DecimalExampleState extends State<_DecimalExample> {
     return Column(
       children: <Widget>[
         SizedBox(height: 16),
-        Text('Decimal', style: Theme.of(context).textTheme.headline6),
+        Text('Decimal', style: Theme.of(context).textTheme.titleLarge),
         DecimalNumberPicker(
           value: _currentDoubleValue,
           minValue: 0,
@@ -159,5 +161,61 @@ class __DecimalExampleState extends State<_DecimalExample> {
         SizedBox(height: 32),
       ],
     );
+  }
+}
+
+class _ItemsExample extends StatefulWidget {
+  @override
+  ___ItemsExampleState createState() => ___ItemsExampleState();
+}
+
+class ___ItemsExampleState extends State<_ItemsExample> {
+  double _currentDoubleValue = 3.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 16),
+        Text('ITEMS', style: Theme.of(context).textTheme.titleLarge),
+        ItemPicker(
+          itemList: [
+            Items(name: "HELLO", address: "BATMAN"),
+            Items(name: "UMESH", address: "CHAKRE"),
+            Items(name: "HELLO", address: "CR7"),
+            Items(name: "BRUCE", address: "WAYNE"),
+          ],
+          onChanged: (value) => setState(() => _currentDoubleValue = value),
+          selectedIndex: 1,
+        ),
+        SizedBox(height: 32),
+      ],
+    );
+  }
+}
+
+class Items {
+  String name;
+  String address;
+
+  Items({required this.name, required this.address});
+  factory Items.fromJson(Map<String, dynamic> json) {
+    return Items(
+      name: json['name'],
+      address: json['address'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'address': address,
+    };
+  }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return name;
   }
 }
